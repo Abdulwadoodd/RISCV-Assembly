@@ -86,6 +86,49 @@ prefix: `riscv64-linux-gnu` or `riscv64-elf`
 - (prefix)-readelf
 - elf2hex
 
+### GCC commands for future reference
+
+
+- Generating `bin` file from `elf`
+
+
+        riscv64-unknown-elf-objcopy -O binary < path of elf file> <bin file name>
+
+- Readable hex instructions from `elf` file
+
+
+        riscv64-unknown-elf-objcopy -O verilog <path of elf file> <hex file name>
+
+
+- Readable hex instruction (not understandable though) from bin file
+
+
+        hexdump -C < path of bin file>
+
+
+
+- Compiling for arch-tests
+
+        riscv64-unknown-elf-gcc -march=rv<32/64>i -static -mcmodel=medany -fvisibility=hidden -nostdlib -nostartfiles -g\
+        -T<path to liker (.ld) file> \
+        -I <path of header (macro) file (.h), if any> \
+        -I <path of header (macro) file (.h), if any> \
+        <path to assembly (.S) file> -o <name of elf/obj file>  -DTEST_CASE_1=True -DXLEN=32 -mabi=ilp32
+
+- Makefile for SERV bare-metal
+
+        TOOLCHAIN_PREFIX=riscv64-unknown-elf-
+
+        %.elf: %.S link.ld
+            $(TOOLCHAIN_PREFIX)gcc -nostartfiles -nostdlib -march=rv32i -mabi=ilp32 -Tlink.ld -o$@ $<
+        %.bin: %.elf
+            $(TOOLCHAIN_PREFIX)objcopy -O binary $< $@
+        %.hex: %.bin
+            python3 makehex.py $< > $@
+
+        clean:
+            rm -f *.elf *.bin *.hex
+
 ## Full system Emulation
 
 To emulate a full system, a further step is necessary. A whole system needs a boot and system image to start up. You can download pre-baked images from [DQIB](https://people.debian.org/~gio/dqib/). Download the file for riscv64-virt and extract the file. There is helpful information in a readme.txt. However, you should be able to emulate the system by typing this command:
