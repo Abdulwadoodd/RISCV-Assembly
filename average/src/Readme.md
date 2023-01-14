@@ -1,0 +1,7 @@
+# Code Explanation 
+
+This file mimics the course page in which the assembly program of `average` is explained.
+
+The following example shows the use of the floating-point registers. It starts with reading floating-point numbers using __scanf__ (lines 09-19) into the memory (label: buffer). A floating-point number uses four bytes. The program continues with the computation of the sum of all values. To this end, the floating-point registers ft0, ft1 and ft3 are used. Integer numbers can be converted into floating-point numbers by the instruction __fcvt.s.w__ (converts a signed integer of word length to float). This is done in lines 24 and 25. The second loop (lines 26-36) computes the sum by loading a floating-number from memory (line 34) and summing the numbers up in register ft1 (line 35). The average is computed by the division in line 38. Finally, the result is printed using __printf__. __printf__ requires the floating-point number as double format in register a1. This is done in lines 41 and 42. The program requires the F and D extensions described in the specification. You can redirect a file containing floating point numbers as input using the shell when executing the program, e.g., __average__ < __numbers.txt__.
+
+> average.s
