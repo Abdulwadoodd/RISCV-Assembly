@@ -80,7 +80,7 @@ Other gdb options:
 
 Below are some of the widely GNU binary utilities by RISC-V toolchain. For all the available utilities, visit the documentation.
 
-prefix: `riscv64-linux-gnu` or `riscv64-elf` 
+prefix: `riscv64-linux-gnu` or `riscv64-unknown-elf` 
 - (prefix)-objdump [--help, --info]
 - (prefix)-objcopy [--help, --info]
 - (prefix)-readelf
